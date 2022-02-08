@@ -49,12 +49,33 @@ namespace UsefulStuff.Controllers
 			return View("People", people);
 		}
 
+		public IActionResult Filter(int age)
+		{
+			var filteredPeople = people.Where(person => person.Age == age);
+			return View("People", filteredPeople);
+
+			/*
+			 * The where method is an extension method https://www.youtube.com/watch?v=VkrKNXscoto&list=PL6n9fhu94yhWi8K02Eqxp3Xyh_OmQ0Rp6&index=3
+			 * from LINQ which allows you to pass a lambda (anonymous delegate) to filter by.
+			 * In other words, where just does a foreach on the people list, and passes each
+			 * person to the method you pass it. The whole "person => person.Age == age" is just a method or function
+			 * being passed to the Where method. It takes in an object, then returns true or false.
+			 * See UnusedFilter to see another example which accomplishes exactly the same thing..
+			 */
+		}
+
+		public IActionResult UnusedFilter(int age)
+		{
+			var filteredPeople = new List<Person>();
+			foreach (var person in people) if (person.Age == age) filteredPeople.Add(person);
+			return View("People", filteredPeople);
+		}
 
 		[HttpPost]
 		//The person is passed to this method by the form (via HttpPost)
 		public IActionResult NewPerson(Person person)
 		{
-			if (person != null) people.Add(person);
+			if (person != null && !string.IsNullOrWhiteSpace(person.Name)) people.Add(person);
 
 			//This can't magically return the matching view because there is no NewPerson view.
 			//Instead this returns the People view.
@@ -62,9 +83,10 @@ namespace UsefulStuff.Controllers
 			return View("People", people);
 		}
 
+		//This person info is passed from the form, then a new person is constructed and added.
 		public IActionResult NewPerson(int age, string name)
 		{
-			if (name != null) people.Add(new Person(age, name));
+			if (!string.IsNullOrWhiteSpace(name)) people.Add(new Person(age, name));
 			return View("People", people);
 		}
 

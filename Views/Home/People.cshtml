@@ -3,8 +3,17 @@
 
 @if (Model != null)
 {
-	@*This creates a div which will be filled in with each element of the list*@
+	@*An expression following an "@" symbol will be interpreted as c#*@
 	<p>There are @Model.Count() people.</p>
+
+	<p>Filter by age</p>
+	<form asp-controller="Home" asp-action="Filter">
+		<label>Age</label>
+		<input name="age">
+		<button type="submit">Filter</button>
+	</form>
+
+	@*Display each person view in the model*@
 	<div class="d-flex">
 		@foreach (var person in Model)
 		{
