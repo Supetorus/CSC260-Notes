@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Person>
+@*This page represents an IEnumerable (list) of Person objects*@
+
+@if (Model != null)
+{
+	@*This creates a div which will be filled in with each element of the list*@
+	<p>There are @Model.Count() people.</p>
+	<div class="d-flex">
+		@foreach (var person in Model)
+		{
+			<partial name="_Person.cshtml" for="@person" />
+		}
+	</div>
+}
+else
+{
+	//If you need to tell the compiler that something should be interpreted as text
+	//in the middle of a c# block use <text>. This could also be p or h1 or any other
+	//text element you want. <text> is good for plain text without any baggage.
+	<text>There are no people here!</text>
+
+	//This is a button with no text input!
+	<form asp-controller="Home" asp-action="GetPeople">
+		<button type="submit">Get People</button>
+	</form>
+}

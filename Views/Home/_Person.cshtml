@@ -1,0 +1,25 @@
+﻿@*It is convention to use _ in front of a file name that is only a partial view.*@
+
+@model Person
+@*model with lowercase "m" sets the type of this document, so you can type in
+@Model.id and the page will know what you are talking about.*@
+
+@*Everything contained inside these brackets will be c#, useful for pre-generating fields*@
+@{
+	var agex3 = Model.Age * 3;
+}
+
+<div class="container background-blue m-2 p-2">
+	@*
+		"@" symbol means the part following is c#.
+		Model with capital "M" means the object which is associated with this page.
+	*@
+	Person's name is @Model.Name<br />
+	Person's age is @Model.Age<br />
+	Person's age x 3 is @agex3
+
+	<form asp-controller="Home" asp-action="DeletePerson">
+		<input hidden value="@Model" />
+		<button type="submit">Delete</button>
+	</form>
+</div>

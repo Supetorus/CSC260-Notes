@@ -1,0 +1,12 @@
+﻿@model Person
+
+<p>This page uses the Person model to create a person and pass them to the NewPerson action / method</p>
+@*When this form is submitted, it will look for the NewPerson method in the HomeController*@
+<form asp-controller="Home" asp-action="NewPerson" method="post">
+	<label asp-for="Age"></label> @*This will appear as Age (capital A) because of the Display attribute in Person.cs*@
+	<input asp-for="Age" /> @*This will automatically recognize the datatype because it is from the model.*@
+	<label asp-for="Name"></label> 
+	<input asp-for="Name" />
+	<button type="submit">Submit</button>
+	@*When this form is submitted, it constructs a Person object from the new data and passes it to the NewPerson method*@
+</form>

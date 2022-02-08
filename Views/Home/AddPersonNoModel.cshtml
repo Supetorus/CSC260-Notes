@@ -1,0 +1,11 @@
+﻿<p>This page uses the form to send a person to the action / method without a model to work from</p>
+
+<form asp-controller="Home" asp-action="NewPerson" method="post">
+	@*	The "name" attribute matches the parameter of the NewPerson action.
+		It has nothing to do with the Person object or its attributes.*@
+	<label>Age</label>
+	<input name="age" type="number" />
+	<label>Name</label>
+	<input name="name" type="text" />
+	<button type="submit">Submit</button>
+</form>
