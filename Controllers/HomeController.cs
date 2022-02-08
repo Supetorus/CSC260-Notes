@@ -60,15 +60,32 @@ namespace UsefulStuff.Controllers
 			 * In other words, where just does a foreach on the people list, and passes each
 			 * person to the method you pass it. The whole "person => person.Age == age" is just a method or function
 			 * being passed to the Where method. It takes in an object, then returns true or false.
-			 * See UnusedFilter to see another example which accomplishes exactly the same thing..
+			 * See aFilter and bFilter to see examples which accomplish the same thing.
 			 */
 		}
 
-		public IActionResult UnusedFilter(int age)
+		public IActionResult aFilter(int age)
 		{
 			var filteredPeople = new List<Person>();
-			foreach (var person in people) if (person.Age == age) filteredPeople.Add(person);
+			// for, foreach, if, and other keywords that are usually followed by a {} code block
+			// Do not require {} for one line statments. Everything up to the semicolon is
+			// assumed to be part of the block. This foreach -> if -> statement could be on one line.
+			foreach (var person in people)
+				if (person.Age == age)
+					filteredPeople.Add(person);
 			return View("People", filteredPeople);
+		}
+
+		public IActionResult bFilter(int age)
+		{
+			// Here we declare a delegate of type Func. It takes in a parameter of type Person
+			// which we call person (but could call anything) then compare that person's age
+			// with the age passed into this OtherUnusedFilter.
+			// Note, when the method is only one statement (basically one line) it doesn't
+			// need {} or a return keyword. They are only used here for clarity.
+			Func<Person, bool> filterDelegate = person => { return person.Age == age; };
+			return View("People", people.Where(filterDelegate));
+
 		}
 
 		[HttpPost]
